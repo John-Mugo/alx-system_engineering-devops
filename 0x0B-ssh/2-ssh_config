@@ -4,7 +4,7 @@ Host *
   PasswordAuthentication no
 
 Host school
-  Hostname <124704-web-01>
+  Hostname <168624-web-01>
   User <ubuntu>
   IdentityFile ~/.ssh/school
 EOF
