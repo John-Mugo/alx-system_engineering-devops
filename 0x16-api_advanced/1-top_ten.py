@@ -1,24 +1,20 @@
 #!/usr/bin/python3
-"""A script that gets top ten articles for a subreddit"""
-import json
+"""
+Queries the Reddit API and prints the titles of the first 10 hot posts listed
+for a given subreddit.
+"""
+
 import requests
 
 
 def top_ten(subreddit):
-    """Function that requests the top ten articles for a subreddit"""
-
-    URL = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    user_agent = "com.holbertonschool.myredditscript:0.0.1"
-    params = {'limit': 10}
-    headers = {'user-agent': user_agent}
-    r = requests.get(URL, headers=headers, params=params)
-    if (r.status_code is not 200):
-        print('None')
-        return
-    r = r.json()
-    posts = r['data']['children'][0:10]
-    if len(posts) is 0:
-        print('None')
-        return
-    for post in posts:
-        print(post['data']['title'])
+    """Prints the titles of the first 10 hot posts for a given subreddit."""
+    url = 'https://www.reddit.com/r/{}/hot.json?limit=10'.format(subreddit)
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 200:
+        posts = response.json().get('data').get('children')
+        for post in posts:
+            print(post.get('data').get('title'))
+    else:
+        print(None)
